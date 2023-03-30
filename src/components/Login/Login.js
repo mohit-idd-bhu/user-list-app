@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
+  const navigate=useNavigate();
   const [enteredUserName, setenteredUserName] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [formIsValid, setFormIsValid] = useState(false);
@@ -26,6 +28,7 @@ const Login = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     props.onLogin(enteredUserName, enteredPassword);
+    navigate('/home');
     setenteredUserName('');
     setEnteredPassword('');
   };
