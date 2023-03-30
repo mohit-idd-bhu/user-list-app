@@ -18,7 +18,7 @@ function UserList() {
 
   const fetchData = async () => {
     setLoading(true);
-    const response = await (await fetch(`https://randomuser.me/api/?results=200`)).json();
+    const response = await (await fetch(`https://randomuser.me/api/?results=2000`)).json();
     const newData = response.results;
     const modifiedData=
         newData.map(
