@@ -25,9 +25,9 @@ const Login = (props) => {
     setEnteredPassword(event.target.value);
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
-    props.onLogin(enteredUserName, enteredPassword);
+    await props.onLogin(enteredUserName, enteredPassword);
     navigate('/home');
     setenteredUserName('');
     setEnteredPassword('');
