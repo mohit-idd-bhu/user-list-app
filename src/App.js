@@ -17,8 +17,10 @@ function App() {
     }
   },[])
 
-  const loginHandler = (email, password) => {
-    if(email==='foo'&&password==='bar'){
+  const loginHandler =async (email, password) => {
+    const response = await (await fetch(`http://localhost:5000/login?user=${email}&password=${password}`)).json();
+    console.log(response.message);
+    if(response.message){
       setIsLoggedIn(true);
       return;
     }
