@@ -5,6 +5,7 @@ import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
 import ProtectedRoute from './components/Utils/ProtectedRoute';
+import Signup from './components/Signup/Signup';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,14 +34,19 @@ function App() {
       <div>
         <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler}/>
         <Routes>
-          {!isLoggedIn&&<Route path='/' element={<Login onLogin={loginHandler}/>} />}
+          {!isLoggedIn&&
+          <Route path='/' 
+            element={<Login onLogin={loginHandler}/>} 
+          />}
           <Route path='/home'
             element={
               <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <Home></Home>
               </ProtectedRoute>
-            }
-          />
+          }/>
+          <Route path='/signup' 
+            element={<Signup></Signup>
+          }/>
         </Routes>
       </div>
     </BrowserRouter>
