@@ -51,7 +51,6 @@ app.post('/adduser',async (req,res)=>{
 app.get('/login',async (req,res)=>{
   const {user,password}=req.query;
   const data={name:user,password:password};
-  console.log(data);
   const response=await login(data);
   if(response) 
       res.status(200).json({message:"Found"});

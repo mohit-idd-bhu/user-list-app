@@ -17,6 +17,11 @@ const Login = (props) => {
     )
   },[enteredUserName,enteredPassword ]);
 
+  useEffect(()=>{
+    setEnteredPassword('');
+    setenteredUserName('');
+  },[]);
+
   const emailChangeHandler = (event) => {
     setenteredUserName(event.target.value);
   };
@@ -27,10 +32,10 @@ const Login = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    await props.onLogin(enteredUserName, enteredPassword);
-    navigate('/home');
-    setenteredUserName('');
-    setEnteredPassword('');
+    const response = await (await fetch(`http://localhost:5000/login?user=${enteredUserName}&password=${enteredPassword}`)).json();
+    if(props.onLogin(response)===true){
+      navigate('/');
+    }
   };
 
   return (

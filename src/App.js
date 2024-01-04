@@ -17,16 +17,17 @@ function App() {
     }
   },[]);
 
-  const loginHandler =async (email, password) => {
-    const response = await (await fetch(`http://localhost:5000/login?user=${email}&password=${password}`)).json();
+  const loginHandler=(response) => {
     if(response.message){
       setIsLoggedIn(true);
-      return;
+      localStorage.setItem('isTokenAvailable',true);
+      return true;
     }
     alert('Invalid UserName or Password');
   };
 
   const logoutHandler = () => {
+    localStorage.removeItem('isTokenAvailable');
     setIsLoggedIn(false);
   };
 
@@ -39,7 +40,7 @@ function App() {
           <Route path='/' 
             element={<Login onLogin={loginHandler}/>} 
           />}
-          <Route path='/home'
+          <Route path='/'
             element={
               <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <Home></Home>
@@ -48,6 +49,8 @@ function App() {
           <Route path='/signup' 
             element={<Signup></Signup>
           }/>
+          <Route path='*'>
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>
