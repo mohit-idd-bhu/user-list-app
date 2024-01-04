@@ -32,7 +32,7 @@ const Login = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const response = await (await fetch(`http://localhost:5000/login?user=${enteredUserName}&password=${enteredPassword}`)).json();
+    const response = await (await fetch(`https://user-list-app.onrender.com/login?user=${enteredUserName}&password=${enteredPassword}`)).json();
     if(props.onLogin(response)===true){
       navigate('/');
     }
