@@ -17,12 +17,7 @@ const Login = (props) => {
     )
   },[enteredUserName,enteredPassword ]);
 
-  useEffect(()=>{
-    setEnteredPassword('');
-    setenteredUserName('');
-  },[]);
-
-  const emailChangeHandler = (event) => {
+  const nameChangeHandler = (event) => {
     setenteredUserName(event.target.value);
   };
 
@@ -30,9 +25,25 @@ const Login = (props) => {
     setEnteredPassword(event.target.value);
   };
 
+  const pushData = async ()=>{
+    const response = await(await fetch('http://localhost:5000/login',{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'name':enteredUserName,
+          'password':enteredPassword
+        })
+      })).json();
+    return response;
+  }
+
   const submitHandler = async (event) => {
     event.preventDefault();
-    const response = await (await fetch(`https://user-list-app.onrender.com/login?user=${enteredUserName}&password=${enteredPassword}`)).json();
+    const response = await pushData();
+    setEnteredPassword('');
+    setenteredUserName('');
     if(props.onLogin(response)===true){
       navigate('/');
     }
@@ -47,7 +58,7 @@ const Login = (props) => {
             type="text"
             id="username"
             value={enteredUserName}
-            onChange={emailChangeHandler}
+            onChange={nameChangeHandler}
           />
         </div>
         <div className={classes.control}

@@ -3,11 +3,19 @@ import Card from "../UI/Card/Card";
 import classes from './Signup.module.css';
 import Button from "../UI/Button/Button";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function Signup(props) {
     const navigate = useNavigate();
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
+    const [formIsValid,setFormIsValid] = useState(false);
+
+    useEffect(()=>{
+        setFormIsValid(
+          password.trim().length > 0 && username.trim().length > 0
+        )
+      },[username,password ]);
 
     const usernameHandler = (e)=>{
         setUsername(e.target.value);
@@ -17,25 +25,31 @@ function Signup(props) {
     }
 
     const pushData = async ()=>{
-        const response = await(await fetch('https://user-list-app.onrender.com/adduser',{
+        const response = await(await fetch('http://localhost:5000/adduser',{
             method:'POST',
-            body:{
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
                 'name':username,
                 'password':password
-            }
+                })
         })).json();
-        return response
+        return response;
     }
 
     const submitHandler = async (e)=>{
         e.preventDefault();
-        console.log(username,password);
         const response = await pushData();
-        if(response.message){
-            alert("User Added");
-        }
         setUsername('');
         setPassword('');
+        if(response.error){
+            alert(response.error);
+            return;
+        }
+        else{
+            alert(response.message);
+        }
         navigate('/');
     }
 
@@ -61,7 +75,7 @@ function Signup(props) {
                     />
                 </div>
                 <div className={classes.actions}>
-                    <Button type="submit" className={classes.btn}>
+                    <Button type="submit" className={classes.btn} disabled={!formIsValid}>
                         Sign Up
                     </Button>
                 </div>

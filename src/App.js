@@ -23,7 +23,7 @@ function App() {
       localStorage.setItem('isTokenAvailable',true);
       return true;
     }
-    alert('Invalid UserName or Password');
+    alert(response.error);
   };
 
   const logoutHandler = () => {
