@@ -26,7 +26,7 @@ const Login = (props) => {
   };
 
   const pushData = async ()=>{
-    const response = await(await fetch('http://localhost:5000/login',{
+    const response = await(await fetch('https://user-list-app.onrender.com/login',{
         method:'POST',
         headers: {
           'Content-Type': 'application/json',

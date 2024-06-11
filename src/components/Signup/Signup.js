@@ -25,7 +25,7 @@ function Signup(props) {
     }
 
     const pushData = async ()=>{
-        const response = await(await fetch('http://localhost:5000/adduser',{
+        const response = await(await fetch('https://user-list-app.onrender.com/adduser',{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json'
